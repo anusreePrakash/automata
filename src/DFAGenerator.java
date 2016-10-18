@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -6,10 +5,10 @@ public class DFAGenerator {
     private final HashMap<State, HashMap<String, State>> transitions;
     private State initialState;
     private final HashSet<State> finalStates;
-    private final ArrayList<String> alphabets;
-    private final ArrayList<State> states;
+    private final HashSet<String> alphabets;
+    private final HashSet<State> states;
 
-    public DFAGenerator(ArrayList<State> states, ArrayList<String> alphabets, HashMap<State, HashMap<String, State>> transitions, State initialState, HashSet<State> finalStates) {
+    public DFAGenerator(HashSet<State> states, HashSet<String> alphabets, HashMap<State, HashMap<String, State>> transitions, State initialState, HashSet<State> finalStates) {
         this.transitions = transitions;
         this.initialState = initialState;
         this.finalStates = finalStates;
@@ -17,7 +16,7 @@ public class DFAGenerator {
         this.states = states;
     }
 
-    public boolean isMachineExists(String string) {
+    public boolean isLanguageExists(String string) {
         String[] wordArray = string.split("");
         boolean characterCheck = true;
         State currentState = null;
@@ -30,11 +29,7 @@ public class DFAGenerator {
         if (alphabets.isEmpty() || states.isEmpty())
             return false;
         for (String each : wordArray) {
-            System.out.println(each+"each");
             currentState = transitions.get(initialState).get(each);
-            System.out.println(currentState.getState() + "   curr");
-//            System.out.println(transitions.get(initialState) + "=)))))))))))))))))");
-
             initialState = currentState;
         }
         if (finalStates.contains(currentState)) {
@@ -44,12 +39,3 @@ public class DFAGenerator {
     }
 }
 
-
-//"transition": {"q1":{"0":"q2","1":"q1"}},
-
-//if(tuple.transition[initialState].has(character) ) {
-//            initialState = tuple.transition[initialState][character];
-//            return true;
-//        }
-//        return false;
-//    }
